@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html
+  <head>
+    <title>PrUT: Outbloxima Reality</title>
+    <link rel="icon" type="image/x-icon" href="assets/image.png">
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8">
+  </head>
+  <body>
+      <div class="bg_ui_thing"></div>
+      <div id="map-viewport">
+        <div id="map-content">
+          <!-- Map -->
+          <div class="map-thing" draggable="false">
+            <img src="assets/prutor_main.png" id="map-image" draggable="false">
+          </div>
+
+          <div class="m_plate">
+            <img src="assets/m_plate.png" draggable="false" style="position: absolute; top: 2250px; left: -1500px;">
+            <button type="button" class="mat map-marker" style="top: 2942.5px; left: -1187.5px; width: 500px; height: 500px;" ondblclick="neat('mat'); this.blur()">
+              Maybe a Tower<br>
+              Requirement: <col_n><span id="mat_req">1,000N</span></col_n><br>
+              Double-click to gain <col_m>+1ɱ</col_m>, but forces a <col_bp>ь</col_bp> reset for <col_bp>0ь</col_bp> and resets <col_n>N</col_n> upgrades<br>
+              Each <col_m>ɱ</col_m> increases the requirement by x100
+            </button>
+            <div class="mat_mile map-marker" style="top: 2937.5px; left: -650px; width: 250px; height: 500px;">
+              <center>
+                <h1><col_m>MaT Milestones</col_m></h1>
+                <div><h1><col_m>1ɱ</col_m></h1><col_p>x10 p</col_p> gain and <col_n>x5 N</col_n> gain</div>
+                <div><h1><col_m>2ɱ</col_m></h1><col_cps>+6 CPS</col_cps></div>
+                <div><h1><col_m>3ɱ</col_m></h1>Nothing (for now)</div>
+              </center>
+            </div>
+          </div>
+          <div class="n_upgs_plate">
+            <img src="assets/n_upgs_plate.png" draggable="false" style="position: absolute; top: 0px; left: 2250px;">
+              <div class="node node_n map-marker" style="top: 100px; left: 1862.5px; width: 87.5px; height: 50px;"></div>
+            <button type="button" class="upg upg_n map-marker" style="top: 50px; left: 1637.5px; width: 225px; height: 150px;" ondblclick='neat("m_conv"); this.blur()'>
+              <div class="title">Max NEaT Conversion<br></div>
+              <div class="boost">Double-click to convert all your N into -1p</div>
+            </button>
+          </div>
+          <div class="bp_plate">
+            <img src="assets/bp_plate.png" draggable="false" style="position: absolute; top: 0px; left: -1500px;">
+            <button type="button" class="upg upg_bp map-marker" style="top: 500px; left: -675px; width: 225px; height: 150px;" ondblclick='bp_reset(); this.blur()'>
+              <div class="title">BOOSTER POINTS<br></div>
+              <div class="boost"><div>
+                Double-click to reset previous progress to gain <col_bp>Booster Points (ь)</col_bp><br>
+                <col_footer>Formula: sqrt(p/10,000)</col_footer>
+              </div></div>
+              <div class="cost">ello</div>
+            </button>
+          </div>
+          <div class="n_plate">
+            <img src="assets/n_plate.png" draggable="false" style="position: absolute; top: -1500px; left: 2200px;">
+            <button type="button" class="neat map-marker" style="top: -1187.5px; left: 2937.5px; width: 500px; height: 500px;" onclick="neat(); this.blur()">
+              Not Even a Tower<br>
+              Current: <span id="neat_timer">0s</span><br>
+              Target to stop: <span id="neat_target">0s</span><br>
+              Allowed offset: <span id="neat_offset">±0.3s</span><br>
+            </button>
+
+            <div class="node node_n map-marker" style="top: 200px; left: 2037.5px; width: 50px; height: 75px;"></div>
+            <button type="button" class="upg upg_n map-marker" style="top: 50px; left: 1950px; width: 225px; height: 150px;" onclick='neat("conv"); this.blur()'>
+              <div class="title">NEaT Conversion<br></div>
+              <div class="boost">Convert your 1N to 1p</div>
+            </button>
+          </div>
+          <!--button class="lounge_enter" style="top: -150px; left: 500px;" onclick="show('.lounge'); isInUI = true">Lounge entrance goes here</button-->
+          
+          <!-- Gameplay -->
+          <!-- 1 stud = 25px -->
+          <div class="upgrades">
+            <div class="node node_p map-marker" style="top: 875px; left: 1100px; width: 50px; height: 75px;"></div>
+            <button type="button" class="clicker map-marker" style="top: 725px; left: 1012.5px; width: 225px; height: 150px;" onclick='gain(); this.blur()'>
+              <div class="title">Click to gain <b>Points</b> (p)<br></div>
+              <div id="pluh"><b>+1p</b></div>
+            </button>
+
+            <button type="button" class="upg upg_p map-marker" style="top: 4500px; left: 1012.5px; width: 900px; height: 200px;" onclick='dataReset(); this.blur()'>
+              <div class="title">DATA RESET</div>
+              <div class="boost">...incase you mess up really badly</div>
+              <div class="cost">be</div>
+            </button>
+
+            <div id="u1">
+              <div class="node node_p map-marker" style="top: 650px; left: 1100px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 500px; left: 1012.5px; width: 225px; height: 150px;" onclick='buy("u1"); this.blur()'>
+                <div class="title">U1 - New Beginnings<br></div>
+                <div class="boost"><div><col_p>x2 p</col_p> gain</div></div>
+                <div class="cost">ello SauceDeBlanc</div>
+              </button>
+            </div>
+            <div id="u2">
+              <div class="node node_p map-marker" style="top: 550px; left: 925px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 500px; left: 700px; width: 225px; height: 150px;" onclick='buy("u2"); this.blur()'>
+                <div class="title">U2 - Some times are boosted<br></div>
+                <div class="boost"><div><col_p>x1.5 p</col_p> gain</div></div>
+                <div class="cost">ello noobler</div>
+              </button>
+            </div>
+            <div id="u3">
+              <div class="node node_p map-marker" style="top: 550px; left: 1237.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 500px; left: 1325px; width: 225px; height: 150px;" onclick='buy("u3"); this.blur()'>
+                <div class="title">U3 - Auto-clicking<br></div>
+                <div class="boost"><div><col_cps>+0.1 CPS</col_cps> (Clicks per Second) for each level</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u4">
+              <div class="node node_p map-marker" style="top: 425px; left: 1100px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 275px; left: 1012.5px; width: 225px; height: 150px;" onclick='buy("u4"); this.blur()'>
+                <div class="title">U4 - Higher increases<br></div>
+                <div class="boost"><div><col_p>x1.6 p</col_p> gain, <col_p>+x0.8 p</col_p> for every level after level 1</div></div>
+                <div class="cost">ello ToTINT =D</div>
+              </button>
+            </div>
+            <div id="u5">
+              <div class="node node_p map-marker" style="top: 325px; left: 1237.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 275px; left: 1325px; width: 225px; height: 150px;" onclick='buy("u5"); this.blur()'>
+                <div class="title">U5 - Still Auto-clicking...<br></div>
+                <div class="boost"><div><col_cps>+0.2 CPS</col_cps></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u6">
+              <div class="node node_p map-marker" style="top: 325px; left: 1550px; width: 400px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 275px; left: 1950px; width: 225px; height: 150px;" onclick='buy("u6"); this.blur()'>
+                <div class="title">U6 - This isn't a tower<br></div>
+                <div class="boost"><div>Unlock <col_n>Not Even a Tower</col_n>, where each completion gives <col_n>+1N</col_n></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u7">
+              <div class="node node_p map-marker" style="top: 425px; left: 2037.5px; width: 50px; height: 300px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 725px; left: 1950px; width: 225px; height: 150px;" onclick='buy("u7"); this.blur()'>
+                <div class="title">U7 - Hungry for generation<br></div>
+                <div class="boost"><div><col_cps>+0.3 CPS</col_cps></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u8">
+              <div class="node node_p map-marker" style="top: 775px; left: 1862.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 725px; left: 1637.5px; width: 225px; height: 150px;" onclick='buy("u8"); this.blur()'>
+                <div class="title">U8 - Synergy<br></div>
+                <div class="boost"><div>Boost <col_p>p</col_p> based on itself<br><col_footer>log10(p)/4+1</col_footer></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u9">
+              <div class="node node_p map-marker" style="top: 875px; left: 787.5px; width: 50px; height: 625px;"></div>
+              <div class="node node_p map-marker" style="top: 1450px; left: 837.5px; width: 575px; height: 50px;"></div>
+              <div class="node node_p map-marker" style="top: 775px; left: 1412.5px; width: 50px; height: 725px;"></div>
+              <div class="node node_p map-marker" style="top: 775px; left: 1462.5px; width: 175px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 725px; left: 700px; width: 225px; height: 150px;" onclick='buy("u9"); this.blur()'>
+                <div class="title">U9 - Small Increase<br></div>
+                <div class="boost"><div><col_p>x1.4 p</col_p> gain and <col_cps>+0.25 CPS</col_cps></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u10">
+              <div class="node node_p map-marker" style="top: 775px; left: 612.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 725px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u10"); this.blur()'>
+                <div class="title">U10 - hg<br></div>
+                <div class="boost"><div>Unlock <col_bp>Booster Point</col_bp> and <col_p>x1.25 p</col_p> gain</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u11">
+              <div class="node node_p map-marker" style="top: 200px; left: 1412.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 50px; left: 1325px; width: 225px; height: 150px;" onclick='buy("u11"); this.blur()'>
+                <div class="title">U11 - Conversion+<br></div>
+                <div class="boost"><div>x2.2 <col_n>NEaT</col_n> conversion rate</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u12">
+              <div class="node node_p map-marker" style="top: 875px; left: 2037.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 950px; left: 1950px; width: 225px; height: 150px;" onclick='buy("u12"); this.blur()'>
+                <div class="title">U12 - Auto-clicking: Part 2<br></div> 
+                <div class="boost"><div>+10 max levels to U3</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u13">
+              <div class="node node_p map-marker" style="top: 875px; left: 1725px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 950px; left: 1637.5px; width: 225px; height: 150px;" onclick='buy("u13"); this.blur()'>
+                <div class="title">U13 - Synergy Extra<br></div>
+                <div class="boost"><div>Improve U8's boost<br><col_footer>log10(p)/4+1 -> log5(p)/3+1</col_footer></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u14">
+              <div class="node node_p map-marker" style="top: 650px; left: 475px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 500px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u14"); this.blur()'>
+                <div class="title">U14 - Slowly inflating...<br></div>
+                <div class="boost"><div>
+                  Gain <col_cps>CPS</col_cps> based on <col_bp>ь</col_bp><br>
+                  <col_footer>10th-root(ь+2)-1</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u15">
+              <div class="node node_p map-marker" style="top: 875px; left: 475px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 950px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u15"); this.blur()'>
+                <div class="title">U15 - A different increase<br></div>
+                <div class="boost"><div><col_n>x1.75 N</col_n> gain</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u16">
+              <div class="node node_p map-marker" style="top: 425px; left: 475px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 275px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u16"); this.blur()'>
+                <div class="title">U16 - Generically unbalanced<br></div>
+                <div class="boost"><div><col_p>x4 p</col_p> gain</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u17">
+              <div class="node node_p map-marker" style="top: 1000px; left: 300px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 950px; left: 75px; width: 225px; height: 150px;" onclick='buy("u17"); this.blur()'>
+                <div class="title">U17 - One for all<br></div>
+                <div class="boost"><div>
+                  <col_p>x2 p</col_p>, <col_bp>x1.25 ь</col_bp> and <col_n>x1.5 N</col_n> gain
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u18">
+              <div class="node node_p map-marker" style="top: 1100px; left: 2037.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1175px; left: 1950px; width: 225px; height: 150px;" onclick='buy("u18"); this.blur()'>
+                <div class="title">U18 - Getting out of hand<br></div>
+                <div class="boost"><div>+35 max levels and <col_cps>+0.05 CPS</col_cps> boost to U3</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u19">
+              <div class="node node_p map-marker" style="top: 1225px; left: 1862.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1175px; left: 1637.5px; width: 225px; height: 150px;" onclick='buy("u19"); this.blur()'>
+                <div class="title">U19 - Another one huh?<br></div>
+                <div class="boost"><div>+15 max levels to U4</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u20">
+              <div class="node node_p map-marker" style="top: 1325px; left: 2037.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1400px; left: 1950px; width: 225px; height: 150px;" onclick='buy("u20"); this.blur()'>
+                <div class="title">U20 - Reduced costs<br></div>
+                <div class="boost"><div>U3's cost is divided by 8 for each level</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u21">
+              <div class="node node_p map-marker" style="top: 1100px; left: 162.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1175px; left: 75px; width: 225px; height: 150px;" onclick='buy("u21"); this.blur()'>
+                <div class="title">U21 - Double trouble<br></div>
+                <div class="boost"><div>U14 is also based on <col_n>N</col_n></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u22">
+              <div class="node node_p map-marker" style="top: 1225px; left: 300px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1175px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u22"); this.blur()'>
+                <div class="title">U22 - Foreshadowing<br></div>
+                <div class="boost"><div>
+                  Upgrades will get more and more expensive at this point... Good luck.<br>
+                  <col_p>x5.5 p</col_p> and <col_n>x2.5 N</col_n> gain
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u23">
+              <div class="node node_p map-marker" style="top: 1325px; left: 475px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1400px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u23"); this.blur()'>
+                <div class="title">U23 - Self-growing<br></div>
+                <div class="boost"><div>
+                  The longer you have this upgrade, the more <col_p>p</col_p> you get<br>
+                  <col_footer>time^0.6+1, time resets on ь reset</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u24">
+              <div class="node node_p map-marker" style="top: 1450px; left: 300px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1400px; left: 75px; width: 225px; height: 150px;" onclick='buy("u24"); this.blur()'>
+                <div class="title">U24 - Boring stuff<br></div>
+                <div class="boost"><div><col_cps>+50 CPS</col_cps></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="u25">
+              <div class="node node_p map-marker" style="top: 1550px; left: 475px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_p map-marker" style="top: 1625px; left: 387.5px; width: 225px; height: 150px;" onclick='buy("u25"); this.blur()'>
+                <div class="title">U25 - To the extreme<br></div>
+                <div class="boost"><div><col_cps>+1.25 CPS</col_cps> boost to U3</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+
+            <div id="bp_bridge_nodes">
+              <div class="node node_bp map-marker" style="top: 775px; left: -437.5px; width: 62.5px; height: 50px;"></div>
+              <div class="node node_bp map-marker" style="top: 550px; left: -437.5px; width: 50px; height: 225px;"></div>
+              <div class="node node_bp map-marker" style="top: 550px; left: -450px; width: 12.5px; height: 50px;"></div>
+
+              <div class="node node_bp1 map-marker" style="top: 775px; left: -375px; width: 75px; height: 50px;"></div>
+              <div class="node node_bp2 map-marker" style="top: 775px; left: -300px; width: 75px; height: 50px;"></div>
+              <div class="node node_bp3 map-marker" style="top: 775px; left: -225px; width: 75px; height: 50px;"></div>
+              <div class="node node_bp4 map-marker" style="top: 775px; left: -150px; width: 75px; height: 50px;"></div>
+              <div class="node node_bp5 map-marker" style="top: 775px; left: -75px; width: 75px; height: 50px;"></div>
+              <div class="node node_p map-marker" style="top: 775px; left: 0px; width: 387.5px; height: 50px;"></div>
+            </div>
+            <div id="b1">
+              <div class="node node_bp map-marker" style="top: 650px; left: -587.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 725px; left: -675px; width: 225px; height: 150px;" onclick='buy("b1"); this.blur()'>
+                <div class="title">B1 - New Layer<br></div>
+                <div class="boost"><div><col_p>x2.5 p</col_p> gain</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b2">
+              <div class="node node_bp map-marker" style="top: 775px; left: -762.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 725px; left: -987.5px; width: 225px; height: 150px;" onclick='buy("b2"); this.blur()'>
+                <div class="title">B2 - Mild Recovery<br></div>
+                <div class="boost"><div><col_cps>+0.4 CPS</col_cps> and +1 max level to U4</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b3">
+              <div class="node node_bp map-marker" style="top: 775px; left: -1075px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 725px; left: -1300px; width: 225px; height: 150px;" onclick='buy("b3"); this.blur()'>
+                <div class="title">B3 - Extension<br></div>
+                <div class="boost"><div>Unlock <col_p>MORE POINT UPGRADES!!!</col_p><br>(Starting from U5)</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b4">
+              <div class="node node_bp map-marker" style="top: 875px; left: -1212.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 950px; left: -1300px; width: 225px; height: 150px;" onclick='buy("b4"); this.blur()'>
+                <div class="title">B4 - Capacity<br></div>
+                <div class="boost"><div><col_p>+x0.5 p</col_p> and <col_bp>+x0.25 ь</col_bp> gain per level, both starting at x1</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b5">
+              <div class="node node_bp map-marker" style="top: 650px; left: -1212.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 500px; left: -1300px; width: 225px; height: 150px;" onclick='buy("b5"); this.blur()'>
+                <div class="title">B5 - Duplication<br></div>
+                <div class="boost"><div><col_p>x1.5 p gain</col_p> per level compunding</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b6">
+              <div class="node node_bp map-marker" style="top: 1000px; left: -1075px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 950px; left: -987.5px; width: 225px; height: 150px;" onclick='buy("b6"); this.blur()'>
+                <div class="title">B6 - Efficiency<br></div>
+                <div class="boost"><div>
+                  Reduce <col_n>NEaT's</col_n> target time<br>
+                  <col_footer>16-22s -> 14-18s</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b7">
+              <div class="node node_bp map-marker" style="top: 1000px; left: -762.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 950px; left: -675px; width: 225px; height: 150px;" onclick='buy("b7"); this.blur()'>
+                <div class="title">B7 - More NEaT than expected<br></div>
+                <div class="boost"><div>
+                  Unlock <col_n>Not</col_n> <col_n2>Ev</col_n2><col_n3>en</col_n3> <col_n4>a</col_n4> <col_n5>Plate</col_n5>,
+                  which consists of <col_n>N</col_n> upgrades
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b8">
+              <div class="node node_bp map-marker" style="top: 1100px; left: -900px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1175px; left: -987.5px; width: 225px; height: 150px;" onclick='buy("b8"); this.blur()'>
+                <div class="title">B8 - Exchange<br></div>
+                <div class="boost"><div>
+                  <col_p>x0.5 p</col_p> gain and <col_cps>-0.3 CPS</col_cps>, but <col_n>x1.75 N</col_n> gain
+                  <col_footer>CPS can't go below 0</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b9">
+              <div class="node node_bp map-marker" style="top: 1100px; left: -587.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1175px; left: -675px; width: 225px; height: 150px;" onclick='buy("b9"); this.blur()'>
+                <div class="title">B9 - Getting faster...<br></div>
+                <div class="boost"><div><col_cps>+0.6 CPS</col_cps></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b10">
+              <div class="node node_bp map-marker" style="top: 1325px; left: -587.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1400px; left: -675px; width: 225px; height: 150px;" onclick='buy("b10"); this.blur()'>
+                <div class="title">B10 - Bigger decay<br></div>
+                <div class="boost"><div>
+                  <col_p>x5 p</col_p> gain, but decreases to <col_p>x1 p</col_p> gain overtime<br>
+                  <col_footer>Resets when performing a ь reset</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b11">
+              <div class="node node_bp map-marker" style="top: 1450px; left: -762.5px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1400px; left: -987.5px; width: 225px; height: 150px;" onclick='buy("b11"); this.blur()'>
+                <div class="title">B11 - NEaT's evil side<br></div>
+                <div class="boost"><div>Unlock <col_m>Maybe a Tower</col_m>, which does the same as <col_bp>ь</col_bp> reset but it'll do something different...</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b12">
+              <div class="node node_bp map-marker" style="top: 1450px; left: -1075px; width: 87.5px; height: 50px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1400px; left: -1300px; width: 225px; height: 150px;" onclick='buy("b12"); this.blur()'>
+                <div class="title">B12 - Straight to the point<br></div>
+                <div class="boost"><div>
+                  Boost <col_p>p</col_p> based on <col_bp>ь</col_bp><br>
+                  <col_footer>(ь/1,000+1)^0.3</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="b13">
+              <div class="node node_bp map-marker" style="top: 1550px; left: -900px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_bp map-marker" style="top: 1625px; left: -987.5px; width: 225px; height: 150px;" onclick='buy("b13"); this.blur()'>
+                <div class="title">B13 - Overpriced recovery<br></div>
+                <div class="boost"><div><col_p>x15 p</col_p> gain and <col_cps>+4 CPS</col_cps><br>Yeah...</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+
+            <div id="n1">
+              <div class="node node_n map-marker" style="top: 100px; left: 2175px; width: 900px; height: 50px;"></div>
+              <button type="button" class="upg upg_n map-marker" style="top: 50px; left: 3075px; width: 225px; height: 150px;" onclick='buy("n1"); this.blur()'>
+                <div class="title">N1 - Efficiency+<br></div>
+                <div class="boost"><div><col_n>x2 N</col_n> gain</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n2">
+              <div class="node node_n map-marker" style="top: 200px; left: 3125px; width: 50px; height: 150px;"></div>
+              <div class="node node_n map-marker" style="top: 300px; left: 2975px; width: 150px; height: 50px;"></div>
+              <div class="node node_n map-marker" style="top: 300px; left: 2975px; width: 50px; height: 150px;"></div>
+              <div class="node node_n2 map-marker" style="top: 450px; left: 2975px; width: 50px; height: 150px;"></div>
+              <button type="button" class="upg upg_n2 map-marker" style="top: 600px; left: 2887.5px; width: 225px; height: 150px;" onclick='buy("n2"); this.blur()'>
+                <div class="title">N2 - Fixed generation<br></div>
+                <div class="boost"><div>Gain <col_p>+20 p</col_p> every second, x2.5 boost every level after level 1</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n3">
+              <div class="node node_n map-marker" style="top: 200px; left: 3200px; width: 50px; height: 150px;"></div>
+              <div class="node node_n map-marker" style="top: 300px; left: 3250px; width: 150px; height: 50px;"></div>
+              <div class="node node_n map-marker" style="top: 300px; left: 3350px; width: 50px; height: 150px;"></div>
+              <div class="node node_n2 map-marker" style="top: 450px; left: 3350px; width: 50px; height: 150px;"></div>
+              <button type="button" class="upg upg_n2 map-marker" style="top: 600px; left: 3262.5px; width: 225px; height: 150px;" onclick='buy("n3"); this.blur()'>
+                <div class="title">N3 - Stricter offset<br></div>
+                <div class="boost"><div><col_n>x1.4 N</col_n> gain, but allowed offset is reduced to ±0.25s</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n4">
+              <div class="node node_n2 map-marker" style="top: 750px; left: 2975px; width: 50px; height: 100px;"></div>
+              <div class="node node_n2 map-marker" style="top: 800px; left: 2837.5px; width: 137.5px; height: 50px;"></div>
+              <div class="node node_n2 map-marker" style="top: 800px; left: 2837.5px; width: 50px; height: 100px;"></div>
+              <div class="node node_n3 map-marker" style="top: 900px; left: 2837.5px; width: 50px; height: 100px;"></div>
+              <button type="button" class="upg upg_n3 map-marker" style="top: 1000px; left: 2750px; width: 225px; height: 150px;" onclick='buy("n4"); this.blur()'>
+                <div class="title">N4 - hg<br></div>
+                <div class="boost"><div>
+                  Boost <col_n>N</col_n> based on <col_p>p</col_p><br>
+                  <col_footer>(p+1)^0.02</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n5"> 
+              <div class="node node_n2 map-marker" style="top: 750px; left: 3350px; width: 50px; height: 100px;"></div>
+              <div class="node node_n2 map-marker" style="top: 800px; left: 3400px; width: 137.5px; height: 50px;"></div>
+              <div class="node node_n2 map-marker" style="top: 800px; left: 3487.5px; width: 50px; height: 100px;"></div>
+              <div class="node node_n3 map-marker" style="top: 900px; left: 3487.5px; width: 50px; height: 100px;"></div>
+              <button type="button" class="upg upg_n3 map-marker" style="top: 1000px; left: 3400px; width: 225px; height: 150px;" onclick='buy("n5"); this.blur()'>
+                <div class="title">N5 - hg<br></div>
+                <div class="boost"><div>
+                  Boost <col_bp>ь</col_bp> based on <col_n>N</col_n><br>
+                  <col_footer>(N+1)^0.05</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n6">
+              <div class="node node_n3 map-marker" style="top: 1050px; left: 2975px; width: 75px; height: 50px;"></div>
+              <div class="node node_n3 map-marker" style="top: 1100px; left: 3000px; width: 50px; height: 125px;"></div>
+              <div class="node node_n3 map-marker" style="top: 1175px; left: 3050px; width: 25px; height: 50px;"></div>
+
+              <div class="node node_n3 map-marker" style="top: 1050px; left: 3325px; width: 75px; height: 50px;"></div>
+              <div class="node node_n3 map-marker" style="top: 1100px; left: 3325px; width: 50px; height: 125px;"></div>
+              <div class="node node_n3 map-marker" style="top: 1175px; left: 3300px; width: 25px; height: 50px;"></div>
+              <button type="button" class="upg upg_n3 map-marker" style="top: 1125px; left: 3075px; width: 225px; height: 150px;" onclick='buy("n6"); this.blur()'>
+                <div class="title">N6 - Efficiency++<br></div>
+                <div class="boost"><div>Reduce <col_n>NEaT's</col_n> target time again<br><col_footer>(14-18s -> 11-15s)</col_footer></div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n7">
+              <div class="node node_n3 map-marker" style="top: 1275px; left: 3087.5px; width: 50px; height: 75px;"></div>
+              <div class="node node_n4 map-marker" style="top: 1350px; left: 3087.5px; width: 50px; height: 150px;"></div>
+              <button type="button" class="upg upg_n4 map-marker" style="top: 1500px; left: 3000px; width: 225px; height: 150px;" onclick='buy("n7"); this.blur()'>
+                <div class="title">N7 - NEaTly automated<br></div>
+                <div class="boost"><div>Automate <col_n>NEaT</col_n> completions every 45s</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n8">
+              <div class="node node_n3 map-marker" style="top: 1275px; left: 3237.5px; width: 50px; height: 75px;"></div>
+              <div class="node node_n3 map-marker" style="top: 1300px; left: 3287.5px; width: 125px; height: 50px;"></div>
+              <div class="node node_n4 map-marker" style="top: 1350px; left: 3362.5px; width: 50px; height: 75px;"></div>
+              <button type="button" class="upg upg_n4 map-marker" style="top: 1425px; left: 3275px; width: 225px; height: 150px;" onclick='buy("n8"); this.blur()'>
+                <div class="title">N8 - Capacity again<br></div>
+                <div class="boost"><div></div>+50 max levels to B4</div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n9">
+              <div class="node node_n4 map-marker" style="top: 1475px; left: 3500px; width: 112.5px; height: 50px;"></div>
+              <div class="node node_n4 map-marker" style="top: 1525px; left: 3562.5px; width: 50px; height: 125px;"></div>
+              <button type="button" class="upg upg_n4 map-marker" style="top: 1650px; left: 3475px; width: 225px; height: 150px;" onclick='buy("n9"); this.blur()'>
+                <div class="title">N9 - Modified exponents<br></div>
+                <div class="boost"><div>+0.025 exponent to N4 and N5</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n10">
+              <div class="node node_n4 map-marker" style="top: 1550px; left: 2812.5px; width: 187.5px; height: 50px;"></div>
+              <div class="node node_n4 map-marker" style="top: 1600px; left: 2812.5px; width: 50px; height: 50px;"></div>
+              <button type="button" class="upg upg_n4 map-marker" style="top: 1650px; left: 2725px; width: 225px; height: 150px;" onclick='buy("n10"); this.blur()'>
+                <div class="title">N10 - Crazy NEaTflation<br></div>
+                <div class="boost"><div><col_n>x2.5 N</col_n> gain and x3 <col_n>NEaT</col_n> conversion rate</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n11">
+              <div class="node node_n5 map-marker" style="top: 1800px; left: 3562.5px; width: 50px; height: 100px;"></div>
+              <button type="button" class="upg upg_n5 map-marker" style="top: 1900px; left: 3475px; width: 225px; height: 150px;" onclick='buy("n11"); this.blur()'>
+                <div class="title">N11 - Slower decay<br></div>
+                <div class="boost"><div>
+                  B10's decay is slower based on <col_p>point</col_p> upgrades bought<br>
+                  <col_footer>x0.95 speed per point upg</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n12">
+              <div class="node node_n5 map-marker" style="top: 1800px; left: 2812.5px; width: 50px; height: 100px;"></div>
+              <button type="button" class="upg upg_n5 map-marker" style="top: 1900px; left: 2725px; width: 225px; height: 150px;" onclick='buy("n12"); this.blur()'>
+                <div class="title">N12 - Effective resets<br></div>
+                <div class="boost"><div>
+                  Improve <col_bp>ь</col_bp> reset formula for every level
+                  <col_footer>sqrt(p^(1+0.025*level)/10,000)</col_footer>
+                </div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n13">
+              <div class="node node_n5 map-marker" style="top: 2050px; left: 2775px; width: 50px; height: 125px;"></div>
+              <div class="node node_n5 map-marker" style="top: 2125px; left: 2825px; width: 50px; height: 50px;"></div>
+              <button type="button" class="upg upg_n5 map-marker" style="top: 2075px; left: 2875px; width: 225px; height: 150px;" onclick='buy("n13"); this.blur()'>
+                <div class="title">N13 - Modified logarithms<br></div>
+                <div class="boost"><div>-3 log base to U8's formula</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n14">
+              <div class="node node_n5 map-marker" style="top: 2000px; left: 3350px; width: 125px; height: 50px;"></div>
+              <div class="node node_n5 map-marker" style="top: 1950px; left: 3350px; width: 50px; height: 50px;"></div>
+              <button type="button" class="upg upg_n5 map-marker" style="top: 1800px; left: 3200px; width: 225px; height: 150px;" onclick='buy("n14"); this.blur()'>
+                <div class="title">N14 - Even stricter offset<br></div>
+                <div class="boost"><div>N3's boost is increased to <col_n>x3 N</col_n> gain, but allowed offset is reduced to ±0.2s</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+            <div id="n15">
+              <div class="node node_n5 map-marker" style="top: 1950px; left: 3250px; width: 50px; height: 225px;"></div>
+              <div class="node node_n5 map-marker" style="top: 2125px; left: 3300px; width: 75px; height: 50px;"></div>
+              <button type="button" class="upg upg_n5 map-marker" style="top: 2075px; left: 3375px; width: 225px; height: 150px;" onclick='buy("n15"); this.blur()'>
+                <div class="title">N15 - hg<br></div>
+                <div class="boost"><div>you win for now</div></div>
+                <div class="cost">ello</div>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- UI -->
+      <div class="ui-layer">
+        <div class="stats">
+          <div class="stat" id="point">0p</div>
+          <div class="stat" id="neat">-2N</div>
+          <div class="stat" id="bpoint">{10,100[23]24}ь</div>
+          <div class="stat" id="mat">a+biɱ</div>
+          <div class="stat" id="playtime">Playtime: (0,0,0,0)(1,1,1,1)[520]yr 3s</div>
+        </div>
+        <!--div class="lounge" style="display: none;">
+          <center class="lounge_main">
+            <h1>welcome to my lounge xd [Need someone to do/revamp CSS]</h1>
+            This is where you'll just... rest here I guess.<br><br>
+            <button class="lounge_bdc" onclick="window.open('https://discord.gg/eAzQPyXTPc', '_blank');">Join my discord server!</button><br>
+            <button class="lounge_bsp" onclick="window.open('https://boosty.to/testboosty12345678/donate', '_blank');">Support my project!</button><br>
+            <button class="lounge_bcr" onclick="hide('.lounge_main'); show('.lounge_cr')">Credits</button>
+            <button class="lounge_bcl" onclick="hide('.lounge'); isInUI = false">Exit the lounge</button>
+          </center>
+          <center class="lounge_cr" style="display: none;">
+            <h1>PrUT:OR Credits</h1>
+            proking_noob2513 // Lead programmer, map maker<br>
+            arincttof // Some help on programming<br>
+            the_hamster_god // Little help on programming?, testing<br>
+            diamondzishere // Little help on programming?<br>
+            79_protons // Testing
+
+            <h1>PrUT Credits</h1>
+            proking_noob2513 (@prokingnoob2513) // Lead developer/scripter<br>
+            wordswithjustair (@zhihin25) // Co-lead developer?<br>
+            denisefans28_2 (@denisefans28_2) // Artist/Illustrator<br>
+            the_hamster_god (@vikisvikis1234) // Scripting<br>
+            cheesestickz16 (@JCarbs13) // Building, little bit of scripting<br>
+            maxamoo678alt (@maxamoo678alt) // Building<br>
+            droneroblo4 (@LersSUS568) // Building<br>
+            boxyh (@q_boxy) // Building?<br>
+            artemkopyahov (@ABoyK12) // Testing<br><br>
+            <button class="lounge_bcl" onclick="hide('.lounge_cr'); show('.lounge_main')">Go back</button><br>
+          </center>
+        </div-->
+        <div class="disclaimer" style="display: none;">
+          <center>
+            <h1>DISCLAIMER!!!</h1>
+            This is a website port of my hit game <a href="https://www.roblox.com/games/4343611304">Proking's Upgrade Tree</a>.
+            There are a lot of modifications to the gameplay, to attempt making it better than PrUT. There's over an hour of gameplay, so have fun I guess!<br>
+            <button class="disclaimer_cl" onclick="hide('.disclaimer', true); isInUI = false">Close</button>
+          </center>
+        </div>
+      </div>
+
+      <script src="metanum.js"></script>
+      <script src="format.js"></script>
+      <script src="map.js"></script>
+      <script src="upgrades.js"></script>
+      <script src="gameplay.js"></script>
+  </body>
+</html>

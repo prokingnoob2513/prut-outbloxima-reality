@@ -21,17 +21,17 @@ function dataTemp() {
 
 var you = dataTemp()
 
-let cps = [new MetaNum(0), 0] // 1st: CPS, 2nd: time until click
-let n7_timer = 45
-let m_req = new MetaNum(Infinity)
-let c_rate = 125
-let p_upgs = 0
-let n2_discount = 1
+var cps = [new MetaNum(0), 0] // 1st: CPS, 2nd: time until click
+var n7_timer = 45
+var m_req = new MetaNum(Infinity)
+var c_rate = 125
+var p_upgs = 0
+var n2_discount = 1
 
-let s_time = 0
-let time = Date.now()
-let isInUI = false
-let timeStop = false // CHANGE TO false BEFORE COMMIT!!!
+var s_time = 0
+var time = Date.now()
+var isInUI = false
+var timeStop = false // CHANGE TO false BEFORE COMMIT!!!
 
 // helper functions
 function save() {
@@ -63,7 +63,6 @@ function load() {
     hg.play().catch(() => {document.addEventListener("click", () => hg.play(), { once: true });});
   }*/
 }
-
 function dataReset() {
   you = dataTemp()
   save()
@@ -278,7 +277,7 @@ function neat(m) {
     case "mat":
       if (you.neat_comp.gte(m_req)) {
         bp_reset(true, false)
-        for (var u of Object.keys(you.upgs)) {
+        for (let u of Object.keys(you.upgs)) {
           // Check if it's a neat upg
           if (u[0] == "n") delete you.upgs[u]
         }
@@ -328,7 +327,7 @@ function bp_reset(force, canGain = true) {
     you.b10_timer = 30
     you.u23_timer = 0
 
-    for (var u of Object.keys(you.upgs)) {
+    for (let u of Object.keys(you.upgs)) {
       // Check if it's a point upg
       if (u[0] == "u") delete you.upgs[u]
     }
@@ -344,7 +343,7 @@ let g_loop = setInterval(() => {
   m_req = new MetaNum(1000).mul(MetaNum(100).pow(you.mat_comp))
 
   let p_upgs2 = 0
-  for (var u of Object.keys(you.upgs)) {
+  for (let u of Object.keys(you.upgs)) {
     if (u[0] == "u") p_upgs2 += 1
   }
   p_upgs = p_upgs2
@@ -353,7 +352,7 @@ let g_loop = setInterval(() => {
   if (you.upgs.u11 >= 1) c_rate2 *= 2.2
   if (you.upgs.n10 >= 1) c_rate2 *= 3
   c_rate = c_rate2
-  n2_discount = 1.25**(you.upgs.n2||0)
+  n2_discount = 1.5**(you.upgs.n2||0)
 
   // Automation stuff
   if (cps[0].gte(20)) {
@@ -369,7 +368,7 @@ let g_loop = setInterval(() => {
   }
 
   // Check if unlocked
-  for (var u of Object.keys(upgs)) {
+  for (let u of Object.keys(upgs)) {
     document.getElementById(u).style.display =
     upgs[u].unlockedIf() ? "" : "none"
 
@@ -429,7 +428,7 @@ let g_loop = setInterval(() => {
   document.getElementById("mat").innerHTML = `${format(you.mat_comp)}ɱ <img class="statImage" src="assets/m.png" draggable="false" style="user-select: none;">`
   document.getElementById("mat").style.display =
     (you.mat_comp.neq(0)) ? "" : "none"
-  document.getElementById("playtime").textContent = `Playtime: ${formatTime(you.playtime)}`
+  document.getElementById("playtime").textContent = formatTime(you.playtime)
   
   document.getElementById("neat_timer").textContent = `${format(you.neat_timer[0])}s`
   document.getElementById("neat_target").textContent = `${format(you.neat_timer[1])}s`
@@ -450,15 +449,20 @@ let g_loop = setInterval(() => {
   if (you.upgs.u18 >= 1) u18 += 0.05
   if (you.upgs.u25 >= 1) u18 += 1.25
   document.querySelector(`#u3 > .upg > .boost > div`).innerHTML = `<col_cps>+${format(u18)} CPS</col_cps> (Clicks per Second) for each level`
+  let l = 10
+  let d = 4
+  if (you.upgs.u13 >= 1) {l = 5; d = 3}
+  if (you.upgs.n13 >= 1) {l -= 3}
+  document.querySelector(`#u8 > .upg > .boost > div`).innerHTML = `Boost <col_p>p</col_p> based on itself<br><col_footer>log${l}(p)/${d}+1</col_footer>`
 
   if (you.upgs.u21 >= 1)
     document.querySelector(`#u14 > .upg > .boost > div`).innerHTML =
       `Gain <col_cps>CPS</col_cps> based on <col_bp>ь</col_bp> and <col_n>N</col_n><br>
-      <col_footer>10th-root(ь*N^1.15+2)-1</col_footer>`
+      <col_footer>(ь*N^1.15+2)^0.1-1</col_footer>`
   else
     document.querySelector(`#u14 > .upg > .boost > div`).innerHTML =
       `Gain <col_cps>CPS</col_cps> based on <col_bp>ь</col_bp><br>
-      <col_footer>10th-root(ь+2)-1</col_footer>`
+      <col_footer>(ь+2)^0.1-1</col_footer>`
   if (you.upgs.n9 >= 1) {
     document.querySelector(`#n4 > .upg > .boost > div`).innerHTML =
       `Boost <col_n>N</col_n> based on <col_p>p</col_p><br>
@@ -513,8 +517,11 @@ let g_loop = setInterval(() => {
 /*document.addEventListener("keydown", (e) => {
   if (e.key == "q") timeStop = !timeStop
 }, {passive: false}) // REMOVE AFTER RELEASE!!!!*/
-document.addEventListener("beforeunload", save, {passive: false})
+document.addEventListener("beforeunload", save)
 
+let n8_gen = setInterval(() => {
+  
+}, 50000)
 let a_save = setInterval(save, 5000)
 load()
 

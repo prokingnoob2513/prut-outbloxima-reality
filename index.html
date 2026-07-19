@@ -41,10 +41,12 @@
           </div>
           <div class="bp_plate">
             <img src="assets/bp_plate.png" draggable="false" style="position: absolute; top: 0px; left: -1500px;">
-            <button type="button" class="upg upg_bp map-marker" style="top: 500px; left: -675px; width: 225px; height: 150px;" ondblclick='bp_reset(); this.blur()'>
+            <button type="button" class="upg upg_bp map-marker" style="top: 500px; left: -675px; width: 225px; height: 150px;" onclick='
+              if (confirm("Perform ь reset for "+format(calc("bp"))+"ь?")) bp_reset(); this.blur()
+            '>
               <div class="title">BOOSTER POINTS<br></div>
               <div class="boost"><div>
-                Double-click to reset previous progress to gain <col_bp>Booster Points (ь)</col_bp><br>
+                Reset previous progress to gain <col_bp>Booster Points (ь)</col_bp><br>
                 <col_footer>Formula: sqrt(p/10,000)</col_footer>
               </div></div>
               <div class="cost">ello</div>
@@ -52,17 +54,17 @@
           </div>
           <div class="n_plate">
             <img src="assets/n_plate.png" draggable="false" style="position: absolute; top: -1500px; left: 2200px;">
+            <div class="node node_n map-marker" style="top: 200px; left: 2037.5px; width: 50px; height: 75px;"></div>
+            <button type="button" class="upg upg_n map-marker" style="top: 50px; left: 1950px; width: 225px; height: 150px;" onclick='neat("conv"); this.blur()'>
+              <div class="title">NEaT Conversion<br></div>
+              <div class="boost">Convert your 1N to 1p</div>
+            </button>
+
             <button type="button" class="neat map-marker" style="top: -1187.5px; left: 2937.5px; width: 500px; height: 500px;" onclick="neat(); this.blur()">
               Not Even a Tower<br>
               Current: <span id="neat_timer">0s</span><br>
               Target to stop: <span id="neat_target">0s</span><br>
               Allowed offset: <span id="neat_offset">±0.3s</span><br>
-            </button>
-
-            <div class="node node_n map-marker" style="top: 200px; left: 2037.5px; width: 50px; height: 75px;"></div>
-            <button type="button" class="upg upg_n map-marker" style="top: 50px; left: 1950px; width: 225px; height: 150px;" onclick='neat("conv"); this.blur()'>
-              <div class="title">NEaT Conversion<br></div>
-              <div class="boost">Convert your 1N to 1p</div>
             </button>
           </div>
           <!--button class="lounge_enter" style="top: -150px; left: 500px;" onclick="show('.lounge'); isInUI = true">Lounge entrance goes here</button-->
@@ -74,12 +76,6 @@
             <button type="button" class="clicker map-marker" style="top: 725px; left: 1012.5px; width: 225px; height: 150px;" onclick='gain(); this.blur()'>
               <div class="title">Click to gain <b>Points</b> (p)<br></div>
               <div id="pluh"><b>+1p</b></div>
-            </button>
-
-            <button type="button" class="upg upg_p map-marker" style="top: 4500px; left: 1012.5px; width: 900px; height: 200px;" onclick='dataReset(); this.blur()'>
-              <div class="title">DATA RESET</div>
-              <div class="boost">...incase you mess up really badly</div>
-              <div class="cost">be</div>
             </button>
 
             <div id="u1">
@@ -345,7 +341,7 @@
               <div class="node node_bp map-marker" style="top: 650px; left: -1212.5px; width: 50px; height: 75px;"></div>
               <button type="button" class="upg upg_bp map-marker" style="top: 500px; left: -1300px; width: 225px; height: 150px;" onclick='buy("b5"); this.blur()'>
                 <div class="title">B5 - Duplication<br></div>
-                <div class="boost"><div><col_p>x1.5 p gain</col_p> per level compunding</div></div>
+                <div class="boost"><div><col_p>x1.5 p</col_p> gain per level compunding</div></div>
                 <div class="cost">ello</div>
               </button>
             </div>
@@ -444,7 +440,7 @@
               <div class="node node_n2 map-marker" style="top: 450px; left: 2975px; width: 50px; height: 150px;"></div>
               <button type="button" class="upg upg_n2 map-marker" style="top: 600px; left: 2887.5px; width: 225px; height: 150px;" onclick='buy("n2"); this.blur()'>
                 <div class="title">N2 - Small discounting<br></div>
-                <div class="boost"><div><col_p>/1.25 p</col_p> cost for point upgrades before U15</div></div>
+                <div class="boost"><div><col_p>/1.5 p</col_p> cost for point upgrades before U15, per level compunding</div></div>
                 <div class="cost">ello</div>
               </button>
             </div>
@@ -516,7 +512,10 @@
               <div class="node node_n4 map-marker" style="top: 1350px; left: 3362.5px; width: 50px; height: 75px;"></div>
               <button type="button" class="upg upg_n4 map-marker" style="top: 1425px; left: 3275px; width: 225px; height: 150px;" onclick='buy("n8"); this.blur()'>
                 <div class="title">N8 - Scavenger hunt<br></div>
-                <div class="boost"><div>Unlock <col_n>NEaT ____</col_n> where it'll spawn randomly around the map every 50-60s (WIP)</div></div>
+                <div class="boost"><div>
+                  Unlock <col_n>NEaT fragments</col_n> where it'll spawn randomly around the map every 50s (WIP)<br>
+                  <col_footer>Despawns after 5m</col_footer>
+                </div></div>
                 <div class="cost">ello</div>
               </button>
             </div>
@@ -594,12 +593,13 @@
 
       <!-- UI -->
       <div class="ui-layer">
+        <button type="button" style="width: 100px; height: 100px;" onclick="show('.info', true && !isInUI); isInUI = true;">open info UI (idk what to position)</button>
+        <div class="tooltip">Tooltip Content</div>
         <div class="stats">
           <div class="stat" id="point">0p</div>
           <div class="stat" id="neat">-2N</div>
           <div class="stat" id="bpoint">{10,100[23]24}ь</div>
           <div class="stat" id="mat">a+biɱ</div>
-          <div class="stat" id="playtime">Playtime: (0,0,0,0)(1,1,1,1)[520]yr 3s</div>
         </div>
         <!--div class="lounge" style="display: none;">
           <center class="lounge_main">
@@ -631,20 +631,31 @@
             <button class="lounge_bcl" onclick="hide('.lounge_cr'); show('.lounge_main')">Go back</button><br>
           </center>
         </div-->
-        <div class="disclaimer" style="display: none;">
+        <div class="info" style="display: none;">
           <center>
-            <h1>DISCLAIMER!!!</h1>
-            This is a website port of my hit game <a href="https://www.roblox.com/games/4343611304">Proking's Upgrade Tree</a>.
-            There are a lot of modifications to the gameplay, to attempt making it better than PrUT. There's over an hour of gameplay, so have fun I guess!<br>
-            <button class="disclaimer_cl" onclick="hide('.disclaimer', true); isInUI = false">Close</button>
-          </center>
+            <h1>PrUT: Outbloxima Reality</h1>
+            <span style="font-style: italic;">...the sequel to <a href="https://www.roblox.com/games/4343611304">Proking's Upgrade Tree</a></span>
+          </center><br>
+          &nbsp;Made by proking_noob2513 // Lead developer (Programming, map-making)<br>
+          &nbsp;arincttof // Dev. assistance (Programming)<br>
+          &nbsp;the_hamster_god // Small dev. assistance (Programming)<br>
+          &nbsp;diamondzishere // Small dev. assistance (Programming)<br>
+          &nbsp;artemkopyahov // Testing, rebalancing ideas<br>
+          &nbsp;79_protons // Testing<br><br>
+          &nbsp;<a href="https://discord.gg/eAzQPyXTPc" target="_blank">My Discord server</a><br>
+          &nbsp;<a href="https://boosty.to/testboosty12345678/donate" target="_blank">Support the project!</a><br><br>
+          &nbsp;Playtime: <span id="playtime"></span>
+          <button class="info_cl" onclick="hide('.info', true && isInUI); isInUI = false;">Close</button>
+          <button class="info_rs" onclick='
+            if (prompt("Are you sure you want to reset data? Type \"reset\" to confirm.") == "reset") dataReset()
+          '>RESET DATA</button>
         </div>
       </div>
 
       <script src="metanum.js"></script>
       <script src="format.js"></script>
-      <script src="map.js"></script>
-      <script src="upgrades.js"></script>
       <script src="gameplay.js"></script>
+      <script src="upgrades.js"></script>
+      <script src="map.js"></script>
   </body>
 </html>

@@ -79,8 +79,8 @@ window.addEventListener('touchcancel', () => {
   isDragging = false;
 });
 window.addEventListener("resize", function () {
-    viewport.width = window.innerWidth;
-    viewport.height = window.innerHeight;
+  viewport.width = window.innerWidth;
+  viewport.height = window.innerHeight;
 });
 
 window.addEventListener('load', () => {
@@ -89,3 +89,44 @@ window.addEventListener('load', () => {
   clampPosition();
   applyMapTransform();
 });
+
+
+
+let targets = []
+const tooltip = document.querySelector('.tooltip');
+for (let u of Object.keys(upgs)) {
+  try {
+    upgs[u].tooltip()
+    targets.push(u)
+  } catch (err) {}
+}
+// Offset values to keep the tooltip slightly away from the exact cursor point
+const offsetX = 15;
+const offsetY = 15;
+for (let u of targets) {
+  const hg = document.querySelector(`#${u} > .upg`)
+  hg.addEventListener('mouseenter', () => {
+    tooltip.classList.add('visible');
+    tooltip.innerHTML = upgs[u].tooltip()
+  });
+  hg.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('visible');
+  });
+  hg.addEventListener('mousemove', (e) => {
+    tooltip.style.left = `${e.clientX + offsetX}px`;
+    tooltip.style.top = `${e.clientY + offsetY}px`;
+  });
+
+  hg.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    tooltip.classList.add('visible');
+    tooltip.innerHTML = upgs[u].tooltip()
+  });
+  hg.addEventListener('touchend', () => {tooltip.classList.remove('visible');});
+  hg.addEventListener('touchcancel', () => {tooltip.classList.remove('visible');});
+  hg.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    tooltip.style.left = `${e.clientX + offsetX}px`;
+    tooltip.style.top = `${e.clientY + offsetY}px`;
+  });
+}

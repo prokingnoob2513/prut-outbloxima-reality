@@ -1,3 +1,17 @@
+/*
+TEMPLATE: {
+    p_cost() {return new MetaNum(...)} // OPTIONAL - point cost for an upg
+    bp_cost() {return new MetaNum(...)} // OPTIONAL - bpoint cost for an upg
+    n_cost() {return new MetaNum(...)} // OPTIONAL - neat cost for an upg
+
+    boost() {return ...}, // boosts for the upg
+    unlockedIf() {return ...}, // upg unlocked if conditions are met
+    max() {return ...}, // max levels for the upg
+    tooltip() {return ...}, // OPTIONAL - extra tooltip for the upg
+    type: ... // 0: generic, 1+: boost-dependent
+}
+*/
+
 var upgs = {
     // point upgs
     u1: {
@@ -6,7 +20,7 @@ var upgs = {
         boost() {return 2},
         unlockedIf() {return you.started},
         max() {return 1},
-        type: 0, // 0: generic, 1: boost-dependent
+        type: 0,
     },
     u2: {
         p_cost() {return new MetaNum(45).div(n2_discount)},
@@ -38,6 +52,7 @@ var upgs = {
         },
         unlockedIf() {return you.upgs.u2 >= 1},
         max() {return 5 + (you.upgs.u12 >= 1 ? 10 : 0) + (you.upgs.u18 >= 1 ? 35 : 0)},
+        tooltip() {return `Current effect: <col_cps>+${format(upgs.u3.boost())} CPS</col_cps>`},
         type: 0
     },
     u4: {
@@ -47,11 +62,10 @@ var upgs = {
             return new MetaNum(140).div(n2_discount)
         },
 
-        boost() {
-            return 1.6 + (you.upgs.u4||0) * 0.8
-        },
+        boost() {return 1.6 + (you.upgs.u4||0) * 0.8},
         unlockedIf() {return you.upgs.u2 >= 1},
         max() {return 2 + (you.upgs.b2 >= 1 ? 1 : 0) + (you.upgs.u19 >= 1 ? 15 : 0)},
+        tooltip() {return `Current effect: <col_p>x${format(upgs.u4.boost())} p</col_p> gain`},
         type: 0
     },
     u5: {
@@ -192,6 +206,7 @@ var upgs = {
         boost() {return undefined},
         unlockedIf() {return you.upgs.u18 >= 1},
         max() {return 5},
+        tooltip() {return `Current effect: <col_p>/${format(8**(you.upgs.u20||0))} p</col_p> cost`},
         type: 0
     },
 
@@ -271,6 +286,7 @@ var upgs = {
         boost() {return [1+0.5*(you.upgs.b4||0), 1+0.25*(you.upgs.b4||0)]},
         unlockedIf() {return you.upgs.b3 >= 1},
         max() {return 25 + (you.mat_comp.gte(1) ? 50 : 0)},
+        tooltip() {return `Current effect: <col_p>x${format(upgs.b4.boost()[0])} p</col_p> and <col_bp>x${format(upgs.b4.boost()[1])} ь</col_bp> gain`},
         type: 0
     },
     b5: {
@@ -279,6 +295,7 @@ var upgs = {
         boost() {return 1.5**(you.upgs.b5||0)},
         unlockedIf() {return you.upgs.b3 >= 1},
         max() {return 5},
+        tooltip() {return `Current effect: <col_p>x${format(upgs.b5.boost())} p</col_p> gain`},
         type: 0
     },
     b6: {
@@ -361,6 +378,7 @@ var upgs = {
         boost() {return undefined},
         unlockedIf() {return you.upgs.n1 >= 1},
         max() {return 5},
+        tooltip() {return `Current effect: <col_p>/${format(1.5**(you.upgs.n2||0))} p</col_p> cost`},
         type: 0
     },
     n3: {
@@ -447,6 +465,7 @@ var upgs = {
         boost() {return undefined},
         unlockedIf() {return you.upgs.n10 >= 1},
         max() {return 5},
+        tooltip() {return `Current effect: sqrt(p^<col_p>${1+0.025*(you.upgs.n12||0)}</col_p>/10,000)`},
         type: 0
     },
     n13: {

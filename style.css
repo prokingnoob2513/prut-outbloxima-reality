@@ -150,7 +150,7 @@ button:hover {cursor: pointer;}
 .node_bp3 {background-color: #B2FFFF;}
 .node_bp4 {background-color: #CBFFFF;}
 .node_bp5 {background-color: #E5FFFF;}
-.node_bp.owned {background-color: #4cbebe;}
+.node_bp.owned {background-color: #55d3d3;}
 
 .node_n {background-color: #776558;}
 .node_n.owned {background-color: #5a4c42;}
@@ -166,7 +166,7 @@ button:hover {cursor: pointer;}
 .upg_p {background-color: #fff; outline: 7px solid #ffffff80; color: #fff;}
 .upg_p.owned {background-color: #c4c4c4; outline-color: #c4c4c480;}
 .upg_bp {background-color: #64ffff; outline: 7px solid #64ffff80; color: #fff;}
-.upg_bp.owned {background-color: #4cbebe; outline-color: #4cbebe80;}
+.upg_bp.owned {background-color: #55d3d3; outline-color: #55d3d380;}
 
 .upg_n {background-color: #776558; outline: 7px solid #77655880; color: #fff;}
 .upg_n.owned {background-color: #5a4c42; outline: 7px solid #5a4c4280; color: #fff;}
@@ -213,6 +213,7 @@ button:hover {cursor: pointer;}
   justify-content: center;
 }
 #u9 > .node {z-index: -1;}
+#n8 > .upg > .boost > div, #n8 > .upg > .boost > div > col_n {font-size: clamp(10px, 7cqmin, 16px);}
 .bp_plate > .upg_bp > .cost {white-space: nowrap;}
 
 /* UI and stuff */
@@ -296,9 +297,8 @@ button:hover {cursor: pointer;}
 .lounge_bsp {background-color: #00ff37;}
 .lounge_bcr {background-color: #ffd900;}
 .lounge_bcl {background-color: #ff1100;}
-.disclaimer_cl {background-color: #00ff37;}
 
-.disclaimer {
+.info {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -310,9 +310,26 @@ button:hover {cursor: pointer;}
   width: 600px;
   height: 400px;
 
-  background-color: #e42a2a;
+  background-color: #dadada;
   outline: 2px solid #000;
   border-radius: 2%;
+}
+.info_cl {
+  background-color: #ff1100;
+  position: absolute;
+  top: 96%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.info_rs {
+  background-color: #ff1100;
+  position: absolute;
+  top: 97%;
+  left: 93%;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+  white-space: nowrap;
+  font-size: x-small;
 }
 
 .ui-layer {
@@ -325,8 +342,28 @@ button:hover {cursor: pointer;}
   pointer-events: none;
   z-index: 2;
 }
+.ui-layer > button {pointer-events: auto;}
+/* Used google AI for this */
+.tooltip {
+  position: fixed; /* Keeps position relative to the viewport */
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  background-color: #333333D0;
+  color: #fff;
+  text-shadow: 
+    -1.05px -1.05px 0 #000,
+     1.05px -1.05px 0 #000,
+    -1.05px  1.05px 0 #000,
+     1.05px  1.05px 0 #000;
+  border-radius: 4px;
+  pointer-events: none; /* Prevents the tooltip from blocking mouse events */
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.15s ease-in-out;
+}
+.tooltip.visible {opacity: 1;}
 
-#point, #playtime {background-color: #ffffffA0; color: #fff;}
+#point {background-color: #ffffffA0; color: #fff;}
 #bpoint {background-color: #64ffffA0; color: #64ffff;}
 #neat {background-color: #776558A0; color: #776558;}
 #mat {background-color: #94BE81A0; color: #94BE81;}

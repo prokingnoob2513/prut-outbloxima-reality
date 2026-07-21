@@ -336,7 +336,7 @@ var upgs = {
     b10: {
         bp_cost() {return new MetaNum(225)},
         
-        boost() {return Math.max(larp(1, 5, you.b10_timer / 30), 1)},
+        boost() {return Math.max(larp(1, 5, you.b10_timer / 120), 1)},
         unlockedIf() {return you.upgs.b9 >= 1},
         max() {return 1},
         type: 1

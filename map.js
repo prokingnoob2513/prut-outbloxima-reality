@@ -89,17 +89,6 @@ window.addEventListener("resize", function () {
   viewport.height = window.innerHeight;
 });
 
-window.addEventListener('load', () => {
-  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
-  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
-  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
-  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
-  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
-  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
-  clampPosition();
-  mapChange();
-});
-
 //////////////////////////////////////////
 // Music
 let musics = [
@@ -185,7 +174,7 @@ function smooth(audioElement, isMute, volume = 1, duration = 2000) {
   }, 50);
 }
 let ms_loop = setInterval(() => {
-  if (isBounded(center, [-1500, 0], [-400, 2250]) && (you.upgs.u10 >= 1 || you.bpoints.neq(0))) { prev_z_id = zone_id; zone_id = 1 }
+  if (isBounded(center, [-1500, 0], [-400, 3750]) && (you.upgs.u10 >= 1 || you.bpoints.neq(0))) { prev_z_id = zone_id; zone_id = 1 }
   else if (isBounded(center, [2625, 0], [3750, 2250]) && you.upgs.b7 >= 1) { prev_z_id = zone_id; zone_id = 2 }
   else { prev_z_id = zone_id; zone_id = 0 }
 
@@ -194,7 +183,7 @@ let ms_loop = setInterval(() => {
     if (j == zone_id) smooth(i, false, you.volume);
     else if (j == prev_z_id) smooth(i, true, you.volume);
   })
-}, 150);
+}, 100);
 
 //////////////////////////////////////////
 // Tooltips
@@ -214,24 +203,53 @@ function setupTooltip(element, contentFn) {
   element.addEventListener('mousemove', (e) => {
     tooltip.style.left = `${e.clientX + offsetX}px`;
     tooltip.style.top = `${e.clientY + offsetY}px`;
-  });
-  /*
-  element.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    tooltip.classList.add('visible');
     tooltip.innerHTML = contentFn();
   });
-  element.addEventListener('touchend', () => {
-    tooltip.classList.remove('visible');
-  });
-  element.addEventListener('touchcancel', () => {
-    tooltip.classList.remove('visible');
-  });
+
+  // Mobile: show tooltip on long-press, follow finger while visible,
+  // and cancel if user scrolls or lifts finger quickly.
+  let touchTimeout = null;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  element.addEventListener('touchstart', (e) => {
+    if (e.touches.length !== 1) return;
+    const t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+    // long-press (300ms) to show tooltip to avoid interfering with scrolling/tap
+    touchTimeout = setTimeout(() => {
+      tooltip.classList.add('visible');
+      tooltip.innerHTML = contentFn();
+      tooltip.style.left = `${t.clientX + offsetX}px`;
+      tooltip.style.top = `${t.clientY + offsetY}px`;
+    }, 300);
+  }, { passive: true });
+
   element.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    tooltip.style.left = `${e.clientX + offsetX}px`;
-    tooltip.style.top = `${e.clientY + offsetY}px`;
-  });*/
+    if (e.touches.length !== 1) return;
+    const t = e.touches[0];
+    // if user moved finger significantly before long-press, cancel
+    if (touchTimeout && Math.hypot(t.clientX - touchStartX, t.clientY - touchStartY) > 10) {
+      clearTimeout(touchTimeout);
+      touchTimeout = null;
+    }
+    if (tooltip.classList.contains('visible')) {
+      // prevent page scroll while dragging the tooltip
+      e.preventDefault();
+      tooltip.style.left = `${t.clientX + offsetX}px`;
+      tooltip.style.top = `${t.clientY + offsetY}px`;
+      tooltip.innerHTML = contentFn();
+    }
+  }, { passive: false });
+  element.addEventListener('touchend', () => {
+    if (touchTimeout) { clearTimeout(touchTimeout); touchTimeout = null; }
+    tooltip.classList.remove('visible');
+  }, { passive: true });
+  element.addEventListener('touchcancel', () => {
+    if (touchTimeout) { clearTimeout(touchTimeout); touchTimeout = null; }
+    tooltip.classList.remove('visible');
+  }, { passive: true });
 }
 Object.keys(upgs).forEach(u => {
   try {
@@ -243,3 +261,14 @@ targets.forEach(u => {
   const hg = document.querySelector(`#${u} > .upg`);
   setupTooltip(hg, () => upgs[u].tooltip());
 })
+
+window.addEventListener('load', () => {
+  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
+  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
+  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
+  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
+  translateX = (viewport.clientWidth - mapContent.scrollWidth) / 2;
+  translateY = (viewport.clientHeight - mapContent.scrollHeight) / 2;
+  clampPosition();
+  mapChange();
+});

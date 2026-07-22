@@ -213,6 +213,7 @@ button:hover {cursor: pointer;}
   justify-content: center;
 }
 #n8 > .upg > .boost > div, #n8 > .upg > .boost > div > col_n {font-size: clamp(10px, 7cqmin, 16px);}
+#b11 > .upg > .boost > div, #b11 > .upg > .boost > div > * {font-size: clamp(10px, 7cqmin, 15px);}
 .bp_plate > .upg_bp > .cost {white-space: nowrap;}
 
 /* UI and stuff */

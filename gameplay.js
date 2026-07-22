@@ -247,6 +247,7 @@ function calc(s) {
       if (you.upgs.b13 >= 1) g = g.add(upgs.b13.boost()[1])
 
       if (you.mat_comp.gte(3)) g = g.mul(2)
+      if (you.upgs.b14 >= 1) g = g.mul(1.5)
       return g
     case "bp":
       let m = 1
@@ -267,6 +268,7 @@ function calc(s) {
       if (you.upgs.n4 >= 1) be *= upgs.n4.boost()
       if (you.upgs.n10 >= 1) be *= upgs.n10.boost()
       if (you.upgs.b8 >= 1) be *= upgs.b8.boost()[2]
+      if (you.upgs.b11 >= 1) be *= upgs.b11.boost()
 
       if (you.mat_comp.gte(1)) be *= 5
       if (you.mat_comp.gte(2)) be *= 3

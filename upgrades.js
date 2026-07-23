@@ -431,8 +431,8 @@ var upgs = {
         n_cost() {return new MetaNum(50)},
 
         boost() {
-            if (you.upgs.n9 >= 1) return you.points.add(1).pow(0.045).max(1)
-            return you.points.add(1).pow(0.02).max(1)
+            if (you.upgs.n9 >= 1) return you.points.add(1).pow(0.065).max(1)
+            return you.points.add(1).pow(0.04).max(1)
         },
         unlockedIf() {return you.upgs.n2 >= 1},
         max() {return 1},
@@ -442,8 +442,8 @@ var upgs = {
         n_cost() {return new MetaNum(150)},
 
         boost() {
-            if (you.upgs.n9 >= 1) return you.neat_comp.add(1).pow(0.075).max(1)
-            return you.neat_comp.add(1).pow(0.05).max(1)
+            if (you.upgs.n9 >= 1) return you.neat_comp.add(1).pow(0.105).max(1)
+            return you.neat_comp.add(1).pow(0.08).max(1)
         },
         unlockedIf() {return you.upgs.n3 >= 1},
         max() {return 1},

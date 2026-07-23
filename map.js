@@ -89,6 +89,51 @@ window.addEventListener("resize", function () {
   viewport.height = window.innerHeight;
 });
 
+// Arrow keys / WASD map movement
+const keyState = {};
+const KEY_SPEED = 800; // pixels per second
+let lastFrameTime = performance.now();
+
+window.addEventListener('keydown', (e) => {
+  if (e.repeat) return;
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','w','a','s','d','W','A','S','D'].includes(e.key)) {
+    keyState[e.key] = true;
+    // prevent page scrolling for arrow keys when focused
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault();
+  }
+});
+window.addEventListener('keyup', (e) => {
+  if (keyState[e.key]) keyState[e.key] = false;
+});
+
+function keyboardPanLoop(now) {
+  const dt = Math.min(0.05, (now - lastFrameTime) / 1000); // cap delta to avoid large jumps
+  lastFrameTime = now;
+
+  if (!isInUI) {
+    let dx = 0, dy = 0;
+    if (keyState['ArrowLeft'] || keyState['a'] || keyState['A']) dx += 1;
+    if (keyState['ArrowRight'] || keyState['d'] || keyState['D']) dx -= 1;
+    if (keyState['ArrowUp'] || keyState['w'] || keyState['W']) dy += 1;
+    if (keyState['ArrowDown'] || keyState['s'] || keyState['S']) dy -= 1;
+
+    if (dx !== 0 || dy !== 0) {
+      // normalize diagonal movement
+      const len = Math.hypot(dx, dy) || 1;
+      dx = dx / len;
+      dy = dy / len;
+
+      translateX += dx * KEY_SPEED * dt;
+      translateY += dy * KEY_SPEED * dt;
+      clampPosition();
+      mapChange();
+    }
+  }
+
+  requestAnimationFrame(keyboardPanLoop);
+}
+requestAnimationFrame(keyboardPanLoop);
+
 //////////////////////////////////////////
 // Music
 let musics = [

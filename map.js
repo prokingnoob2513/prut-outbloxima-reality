@@ -137,7 +137,7 @@ requestAnimationFrame(keyboardPanLoop);
 //////////////////////////////////////////
 // Music
 let musics = [
-  new Audio("assets/audio/MAIN - Pilotredsun- Fat Cat.mp3"),
+  new Audio("assets/audio/MAIN - CatCatPC - skinny dog.mp3"),
   new Audio("assets/audio/BPOINT - Speder2 - Asougi.mp3"),
   new Audio("assets/audio/NEAT - nicopatty - crashout.mp3"),
   new Audio("assets/audio/PLACEHOLD - Creo - Crazy X ZXKAI - NO BATIDÃO  Kyouki & Climax mashup.mp3")

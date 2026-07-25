@@ -137,6 +137,7 @@ button:hover {cursor: pointer;}
   text-align: center;
   line-height: 1.2;
   padding: 4px;
+  pointer-events: none;
 }
 .upg > .cost {
   width: 100%;

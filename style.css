@@ -220,6 +220,7 @@ button:hover {cursor: pointer;}
 #b15 > .upg > .boost > div, #b15 > .upg > .boost > div > * {font-size: clamp(10px, 7cqmin, 14px);}
 .bp_plate > .upg_bp > .cost {white-space: nowrap;}
 .n_plate > .upg_n > .boost {pointer-events: none;}
+.n_upgs_plate > .upg_n > .boost {pointer-events: none;}
 
 /* UI and stuff */
 

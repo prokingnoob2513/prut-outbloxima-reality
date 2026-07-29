@@ -1,2 +1,1 @@
-# prut-outbloxima-reality
-heck roblox until smth good happens...
+# DON'T FORK THE REPO PLS!!!!!!
